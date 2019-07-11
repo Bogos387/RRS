@@ -242,6 +242,51 @@ bool ProfConverter::load(std::ifstream &stream,
 //------------------------------------------------------------------------------
 //
 //------------------------------------------------------------------------------
+bool ProfConverter::loadSpeedsFromTrack(const std::string &path)
+{
+    if (path.empty())
+        return false;
+
+    std::ifstream stream(path.c_str(), std::ios::in);
+
+    if (!stream.is_open())
+    {
+        std::cout << "File " << path << " not opened" << std::endl;
+        return false;
+    }
+
+    speed_limits.clear();
+
+    while (!stream.eof())
+    {
+        std::string line = getLine(stream);
+
+        if (line.empty())
+            continue;
+
+        std::istringstream ss(line);
+
+        speed_limits_track_struct_t  slt;
+
+        ss >> slt.trackFirst
+           >> slt.trackLast
+           >> slt.vLim;
+
+
+        speed_limits_struct_t  sl;
+        sl.x = slt.trackFirst;
+        sl.vLim = slt.vLim;
+
+        speed_limits.push_back(sl);
+    }
+
+
+    return true;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
 bool ProfConverter::readWaypoints(const std::string &path,
                                   std::vector<waypoint_t> &waypoints)
 {
@@ -330,6 +375,10 @@ bool ProfConverter::conversion(const std::string &routeDir)
     std::string trk2_path = compinePath(routeDir, "route2.trk");
     std::string map_path = compinePath(routeDir, "route1.map");
 
+    std::string speedLimits1_path = compinePath(routeDir, "speeds1.dat");
+    std::string speedLimits2_path = compinePath(routeDir, "speeds2.dat");
+
+
     if (load(trk1_path, tracks_data1))
     {
         writeProfileData(tracks_data1, "profile1.conf");
@@ -342,6 +391,11 @@ bool ProfConverter::conversion(const std::string &routeDir)
 
     if (readWaypoints(compinePath(routeDir, "start_kilometers.dat"), waypoints))
         writeWaypoints("waypoints.conf", waypoints);
+
+    if (loadSpeedsFromTrack(speedLimits1_path))
+        writeSpeedLimitsData(speed_limits, "speed-limits1.conf");
+    if (loadSpeedsFromTrack(speedLimits2_path))
+        writeSpeedLimitsData(speed_limits, "speed-limits2.conf");
 
     return true;
 }
@@ -362,6 +416,26 @@ void ProfConverter::writeProfileData(const std::vector<track_t> &tracks_data,
         stream << track.rail_coord / 1000.0f << " "
                << track.orth.z * 1000.0f << " "
                << "0.0" << std::endl;
+    }
+
+    stream.close();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ProfConverter::writeSpeedLimitsData(const std::vector<speed_limits_struct_t> &speed_limits,
+                                         const std::string &file_name)
+{
+    std::string path = compinePath(toNativeSeparators(routeDir), file_name);
+    std::ofstream stream(path.c_str(), std::ios::out);
+
+    for (auto it = speed_limits.begin(); it != speed_limits.end(); ++it)
+    {
+        speed_limits_struct_t sl = *it;
+
+        stream << sl.x / 1000.0f << " "
+               << sl.vLim / 3.6f << std::endl;
     }
 
     stream.close();

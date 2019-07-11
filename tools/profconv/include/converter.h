@@ -18,6 +18,7 @@
 #include    <vector>
 
 #include    "track.h"
+#include    "speed-limits-struct.h"
 #include    "waypoint.h"
 #include    "power_line_element.h"
 #include    "neutral_insertion.h"
@@ -46,6 +47,8 @@ private:
 
     std::vector<track_t>    tracks_data2;
 
+    std::vector<speed_limits_struct_t>  speed_limits;
+
     std::vector<waypoint_t> waypoints;
 
     std::vector<power_line_element_t> power_line1;
@@ -60,6 +63,8 @@ private:
 
     bool load(std::ifstream &stream, std::vector<track_t> &track_data);
 
+    bool loadSpeedsFromTrack(const std::string &path);
+
     bool readWaypoints(const std::string &path, std::vector<waypoint_t> &waypoints);
 
     bool readWaypoints(std::wifstream &stream, std::vector<waypoint_t> &waypoints);
@@ -70,6 +75,9 @@ private:
 
     void writeProfileData(const std::vector<track_t> &tracks_data,
                           const std::string &file_name);
+
+    void writeSpeedLimitsData(const std::vector<speed_limits_struct_t> &speed_limits,
+                              const std::string &file_name);
 
     void fileToUtf8(const std::string &path);    
 
