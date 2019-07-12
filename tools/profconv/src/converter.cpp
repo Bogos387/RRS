@@ -257,6 +257,9 @@ bool ProfConverter::loadSpeedsFromTrack(const std::string &path)
 
     speed_limits.clear();
 
+    speed_limits_track_struct_t  slt;
+    speed_limits_struct_t  sl;
+
     while (!stream.eof())
     {
         std::string line = getLine(stream);
@@ -266,14 +269,11 @@ bool ProfConverter::loadSpeedsFromTrack(const std::string &path)
 
         std::istringstream ss(line);
 
-        speed_limits_track_struct_t  slt;
-
         ss >> slt.trackFirst
            >> slt.trackLast
            >> slt.vLim;
 
 
-        speed_limits_struct_t  sl;
         sl.x = slt.trackFirst;
         sl.vLim = slt.vLim;
 
@@ -435,7 +435,7 @@ void ProfConverter::writeSpeedLimitsData(const std::vector<speed_limits_struct_t
         speed_limits_struct_t sl = *it;
 
         stream << sl.x / 1000.0f << " "
-               << sl.vLim / 3.6f << std::endl;
+               << sl.vLim << std::endl;
     }
 
     stream.close();
