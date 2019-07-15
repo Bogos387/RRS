@@ -273,6 +273,9 @@ bool ProfConverter::loadSpeedsFromTrack(const std::string &path)
            >> slt.trackLast
            >> slt.vLim;
 
+        // ...
+        // здеь переводим треки в координаты
+        // ...
 
         sl.x = slt.trackFirst;
         sl.vLim = slt.vLim;
@@ -280,6 +283,48 @@ bool ProfConverter::loadSpeedsFromTrack(const std::string &path)
         speed_limits.push_back(sl);
     }
 
+
+    return true;
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+bool ProfConverter::loadSvetoforsFromTrack(const std::string &path)
+{
+    if (path.empty())
+        return false;
+
+    std::ifstream stream(path.c_str(), std::ios::in);
+
+    if (!stream.is_open())
+    {
+        std::cout << "File " << path << " not opened" << std::endl;
+        return false;
+    }
+
+    svetofors.clear();
+
+    svetofor_struct_t sst;
+
+    while (!stream.eof())
+    {
+        std::string line = getLine(stream);
+
+        if (line.empty())
+            continue;
+
+        std::istringstream ss(line);
+
+        ss >> sst.x
+           >> sst.type;
+
+        // ...
+        // здеь переводим треки в координаты
+        // ...
+
+        svetofors.push_back(sst);
+    }
 
     return true;
 }
@@ -375,8 +420,11 @@ bool ProfConverter::conversion(const std::string &routeDir)
     std::string trk2_path = compinePath(routeDir, "route2.trk");
     std::string map_path = compinePath(routeDir, "route1.map");
 
-    std::string speedLimits1_path = compinePath(routeDir, "speeds1.dat");
-    std::string speedLimits2_path = compinePath(routeDir, "speeds2.dat");
+    std::string speeds1Res_path = compinePath(routeDir, "speeds1.dat");
+    std::string speeds2Res_path = compinePath(routeDir, "speeds2.dat");
+
+    std::string svetofor1Res_path = compinePath(routeDir, "svetofor1.dat");
+    std::string svetofor2Res_path = compinePath(routeDir, "svetofor2.dat");
 
 
     if (load(trk1_path, tracks_data1))
@@ -392,10 +440,15 @@ bool ProfConverter::conversion(const std::string &routeDir)
     if (readWaypoints(compinePath(routeDir, "start_kilometers.dat"), waypoints))
         writeWaypoints("waypoints.conf", waypoints);
 
-    if (loadSpeedsFromTrack(speedLimits1_path))
-        writeSpeedLimitsData(speed_limits, "speed-limits1.conf");
-    if (loadSpeedsFromTrack(speedLimits2_path))
-        writeSpeedLimitsData(speed_limits, "speed-limits2.conf");
+    if (loadSpeedsFromTrack(speeds1Res_path))
+        writeSpeedLimitsData(speed_limits, "speeds1.conf");
+    if (loadSpeedsFromTrack(speeds2Res_path))
+        writeSpeedLimitsData(speed_limits, "speeds2.conf");
+
+    if (loadSvetoforsFromTrack(svetofor1Res_path))
+        writeSvetoforsData(svetofors, "svetofors1.conf");
+    if (loadSvetoforsFromTrack(svetofor2Res_path))
+        writeSvetoforsData(svetofors, "svetofors2.conf");
 
     return true;
 }
@@ -436,6 +489,26 @@ void ProfConverter::writeSpeedLimitsData(const std::vector<speed_limits_struct_t
 
         stream << sl.x / 1000.0f << " "
                << sl.vLim << std::endl;
+    }
+
+    stream.close();
+}
+
+//------------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------------
+void ProfConverter::writeSvetoforsData(const std::vector<svetofor_struct_t> &svetofors,
+                                       const std::string &file_name)
+{
+    std::string path = compinePath(toNativeSeparators(routeDir), file_name);
+    std::ofstream stream(path.c_str(), std::ios::out);
+
+    for (auto it = svetofors.begin(); it != svetofors.end(); ++it)
+    {
+        svetofor_struct_t sl = *it;
+
+        stream << sl.x / 1000.0f << " "
+               << sl.type << std::endl;
     }
 
     stream.close();

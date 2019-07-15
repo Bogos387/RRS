@@ -19,6 +19,7 @@
 
 #include    "track.h"
 #include    "speed-limits-struct.h"
+#include    "svetofor-struct.h"
 #include    "waypoint.h"
 #include    "power_line_element.h"
 #include    "neutral_insertion.h"
@@ -49,6 +50,8 @@ private:
 
     std::vector<speed_limits_struct_t>  speed_limits;
 
+    std::vector<svetofor_struct_t> svetofors;
+
     std::vector<waypoint_t> waypoints;
 
     std::vector<power_line_element_t> power_line1;
@@ -65,6 +68,8 @@ private:
 
     bool loadSpeedsFromTrack(const std::string &path);
 
+    bool loadSvetoforsFromTrack(const std::string &path);
+
     bool readWaypoints(const std::string &path, std::vector<waypoint_t> &waypoints);
 
     bool readWaypoints(std::wifstream &stream, std::vector<waypoint_t> &waypoints);
@@ -78,6 +83,9 @@ private:
 
     void writeSpeedLimitsData(const std::vector<speed_limits_struct_t> &speed_limits,
                               const std::string &file_name);
+
+    void writeSvetoforsData(const std::vector<svetofor_struct_t> &svetofors,
+                            const std::string &file_name);
 
     void fileToUtf8(const std::string &path);    
 
