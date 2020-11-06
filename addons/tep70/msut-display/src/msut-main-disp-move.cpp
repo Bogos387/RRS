@@ -157,8 +157,8 @@ void MsutMainDispMove::updateData(display_signals_t input_signals)
     frameVU2_I_->move(frameVU2_I_->x(), fooY0 + fooH*(250 - input_signals[MSUT_VU2_I])/250);
     labelVU2_I_->setText(QString::number(input_signals[MSUT_VU2_I]));
 
-    label_kW_left_->setText(QString::number(input_signals[MSUT_POWER]));
-    label_kW_right_->setText(QString::number(input_signals[MSUT_POWER]));
+    label_kW_left_->setText(QString::number(input_signals[MSUT_POWER] - input_signals[MSUT_POWER_OTOPLENIE]));
+    label_kW_right_->setText(QString::number(input_signals[MSUT_POWER_OTOPLENIE]));
 }
 
 

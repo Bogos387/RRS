@@ -45,20 +45,12 @@ MsutDisplay::~MsutDisplay()
 //------------------------------------------------------------------------------
 void MsutDisplay::init()
 {
+    //
     background_ = new QLabel(this);
     background_->setFrameShape(QLabel::NoFrame);
-
-    //QPixmap pic;
-    if (!pic_.load(":/msut/msut-main-move"))
-    {
-        return;
-    }
-
+    if (!pic_.load(":/msut/msut-main-move")) { return; }
     background_->setFixedSize(pic_.size());
-
     background_->setPixmap(pic_);
-
-
 
 
 
@@ -108,12 +100,12 @@ void MsutDisplay::init()
 
     // ПОЗИЦИЯ
     labelPositin_ = new QLabel(background_);
-    drawNumberLabel_(labelPositin_, QRect(35,146, 80,48), 35, "white");
+    drawNumberLabel_(labelPositin_, QRect(35,146, 80,48), 35);
     labelPositin_->setText("0");
 
     // РЕЖИМ
     labelRezim_ = new QLabel(background_);
-    drawNumberLabel_(labelRezim_, QRect(15,244, 115,45), 14, "white");
+    drawNumberLabel_(labelRezim_, QRect(15,244, 115,45), 14);
     labelRezim_->setText("СТОП");
 
 
@@ -131,7 +123,6 @@ void MsutDisplay::drawNumberLabel_(QLabel* lab, QRect geo, int fontSize, QString
 {
     lab->resize(geo.size());
     lab->move(geo.x(), geo.y());
-    //lab->setStyleSheet("border: 1px solid red;");
     lab->setStyleSheet("color:"+ color +";");
     lab->setAlignment(align);
     lab->setFont(QFont("Arial", fontSize, 63));
@@ -221,6 +212,27 @@ void MsutDisplay::slotUpdateTimer()
         break;
     case 1:
         labelRezim_->setText("ТЯГА");
+        break;
+    case 2:
+        labelRezim_->setText("ВЫБЕГ");
+        break;
+    case 3:
+        labelRezim_->setText("ЭДТ");
+        break;
+    case 4:
+        labelRezim_->setText("ЗАМЕЩЕНИЕ");
+        break;
+    case 5:
+        labelRezim_->setText("ПРОКАЧКА");
+        break;
+    case 6:
+        labelRezim_->setText("ПРОКРУТКА");
+        break;
+    case 7:
+        labelRezim_->setText("ОСТАНОВ");
+        break;
+    case 8:
+        labelRezim_->setText("ХОЛ. ХОД");
         break;
 
     default:

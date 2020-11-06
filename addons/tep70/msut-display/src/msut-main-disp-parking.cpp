@@ -81,19 +81,19 @@ MsutMainDispParking::MsutMainDispParking(QLabel *parent)
 
 void MsutMainDispParking::updateData(display_signals_t input_signals)
 {
-    scaleArrow_P_oil_->setVal(input_signals[MSUT_ET_T]);
-    scaleArrow_T_whater_->setVal(input_signals[MSUT_ET_T]);
-    scaleArrow_T_oil_->setVal(input_signals[MSUT_ET_T]);
-    scaleArrow_I_AB_->setVal(input_signals[MSUT_ET_T]);
-    scaleArrow_P_fuel_->setVal(input_signals[MSUT_ET_T]);
-    scaleArrow_U_chain_->setVal(input_signals[MSUT_ET_T]);
+    scaleArrow_P_oil_->setVal(input_signals[MSUT_U_CHAIN]);
+    scaleArrow_T_whater_->setVal(input_signals[MSUT_P_FUEL]);
+    scaleArrow_T_oil_->setVal(input_signals[MSUT_I_AB]);
+    scaleArrow_I_AB_->setVal(input_signals[MSUT_T_OIL]);
+    scaleArrow_P_fuel_->setVal(input_signals[MSUT_T_WHATER]);
+    scaleArrow_U_chain_->setVal(input_signals[MSUT_P_OIL]);
 
-    label_P_oil_->setText(QString::number(input_signals[MSUT_ET_T]));
-    label_T_whater_->setText(QString::number(input_signals[MSUT_ET_T]));
-    label_T_oil_->setText(QString::number(input_signals[MSUT_ET_T]));
-    label_I_AB_->setText(QString::number(input_signals[MSUT_ET_T]));
-    label_P_fuel_->setText(QString::number(input_signals[MSUT_ET_T]));
-    label_U_chain_->setText(QString::number(input_signals[MSUT_ET_T]));
+    label_P_oil_->setText(QString::number(input_signals[MSUT_U_CHAIN]));
+    label_T_whater_->setText(QString::number(input_signals[MSUT_P_FUEL]));
+    label_T_oil_->setText(QString::number(input_signals[MSUT_I_AB]));
+    label_I_AB_->setText(QString::number(input_signals[MSUT_T_OIL]));
+    label_P_fuel_->setText(QString::number(input_signals[MSUT_T_WHATER]));
+    label_U_chain_->setText(QString::number(input_signals[MSUT_P_OIL]));
 }
 
 
