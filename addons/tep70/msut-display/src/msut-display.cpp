@@ -142,22 +142,6 @@ void MsutDisplay::slotUpdateTimer()
 {
 
 
-//    msutMainDispMove_->setMyVisible(false);
-//    QPixmap pic;
-//    if (!pic.load(":/msut/msut-main-parking"))
-//    {
-//        return;
-//    }
-//    background_->setPixmap(pic);
-
-//    if (!pic.load(":/msut/msut-main-parking"))
-//    {
-//        return;
-//    }
-//    background_->setPixmap(pic);
-
-
-
 
     int z = 2;
     if (z == 1)
