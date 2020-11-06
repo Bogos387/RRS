@@ -20,8 +20,6 @@ public:
 
 
 private:
-    //QLabel* fonZ_;
-
     ScaleArrow* scaleArrow_;
     ScaleArrow* scaleSpeed_;
     ScaleArrow* scaleAcceleration_;
@@ -41,12 +39,8 @@ private:
     QLabel* labelVU2_U_;
     QLabel* labelVU2_I_;
 
-
-
     QLabel* label_kW_left_;
     QLabel* label_kW_right_;
-
-
 
     HorizontBar* hBar_;
 
@@ -54,8 +48,6 @@ private:
 
     void drawNumberLabel_(QLabel* lab, QRect geo, int fontSize,
                           QString color, Qt::Alignment align = Qt::AlignCenter);
-
-
 
 
 

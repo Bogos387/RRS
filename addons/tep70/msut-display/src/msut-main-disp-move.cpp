@@ -10,16 +10,7 @@
 
 MsutMainDispMove::MsutMainDispMove(QLabel *parent)
     : QLabel(parent)
-    //, fonZ_(parent)
 {
-//    QPixmap pic;
-//    if (!pic.load(":/msut/msut-main-move"))
-//    {
-//        return;
-//    }
-//    parent->setPixmap(pic);
-
-
     // ЭТ/Тяга
     scaleArrow_ = new ScaleArrow(QSize(220, 100), 28, parent);
     scaleArrow_->setIsArrow(true);
@@ -150,14 +141,6 @@ void MsutMainDispMove::updateData(display_signals_t input_signals)
     int fooH = 231;
     int fooW = 13;
     int fooY0 = 68;
-
-//    // для виду. Удалить. zБогос
-//    input_signals[MSUT_VU1_I_TED] = 1.2;
-//    input_signals[MSUT_VU1_I] = 7;
-//    input_signals[MSUT_VU1_U] = 0.8;
-//    input_signals[MSUT_VU2_U] = 3.2;
-//    input_signals[MSUT_VU2_I] = 200;
-
     frameVU1_Ited_->resize(fooW, fooH*input_signals[MSUT_VU1_I_TED]/1.5);
     frameVU1_Ited_->move(frameVU1_Ited_->x(), fooY0 + fooH*(1.5 - input_signals[MSUT_VU1_I_TED])/1.5);
     labelVU1_Ited_->setText(QString::number(input_signals[MSUT_VU1_I_TED]));
@@ -182,8 +165,6 @@ void MsutMainDispMove::updateData(display_signals_t input_signals)
 
 void MsutMainDispMove::setMyVisible(bool flag)
 {
-    //fonZ_->setVisible(flag);
-
     scaleArrow_->setVisible(flag);
     scaleSpeed_->setVisible(flag);
     scaleAcceleration_->setVisible(flag);
@@ -207,6 +188,7 @@ void MsutMainDispMove::setMyVisible(bool flag)
 
     hBar_->setVisible(flag);
 }
+
 
 
 void MsutMainDispMove::drawNumberLabel_(QLabel *lab, QRect geo, int fontSize, QString color, Qt::Alignment align)

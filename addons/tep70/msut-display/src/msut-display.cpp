@@ -83,6 +83,7 @@ void MsutDisplay::init()
 
     // Элементы основного экрана. Стоянка
     msutMainDispParking_ = new MsutMainDispParking(background_);
+    msutMainDispParking_->setMyVisible(false);
 
 
 
@@ -140,9 +141,6 @@ void MsutDisplay::drawNumberLabel_(QLabel* lab, QRect geo, int fontSize, QString
 
 void MsutDisplay::slotUpdateTimer()
 {
-
-
-
     int z = 2;
     if (z == 1)
     {
