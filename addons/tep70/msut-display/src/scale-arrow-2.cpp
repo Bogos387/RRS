@@ -80,12 +80,12 @@ void ScaleArrow2::draw_(double _val)
              << QPointF( w_2_ + r2*cos(angle-fooAngle),
                          h_2_ + r2*sin(angle-fooAngle) );
 
-    paint.setPen(QPen(Qt::black, 1, Qt::SolidLine));
+    paint.setPen(QPen(Qt::red, 1, Qt::SolidLine));
     paint.setBrush(Qt::red);
     paint.drawPolygon(triangle);
 
 
-    paint.setPen(QPen( QColor(Qt::blue),
+    paint.setPen(QPen( QColor(Qt::red),
                        16,
                        Qt::SolidLine,
                        Qt::RoundCap ));

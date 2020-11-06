@@ -141,31 +141,6 @@ void MsutDisplay::drawNumberLabel_(QLabel* lab, QRect geo, int fontSize, QString
 
 void MsutDisplay::slotUpdateTimer()
 {
-    int z = 2;
-    if (z == 1)
-    {
-        msutMainDispMove_->setMyVisible();
-        msutMainDispParking_->setMyVisible(false);
-        if (!pic_.load(":/msut/msut-main-move")) { return; }
-    }
-    else
-    if (z == 2)
-    {
-        msutMainDispMove_->setMyVisible(false);
-        msutMainDispParking_->setMyVisible();
-        if (!pic_.load(":/msut/msut-main-parking")) { return; }
-    }
-    else
-        return;
-
-    background_->setPixmap(pic_);
-
-
-
-    //
-    labelCurDate_->setText(QDate::currentDate().toString("dd.MM.yyyy"));
-    labelCurTime_->setText(QTime::currentTime().toString());
-
 //    if (    (!TO_BOOL(input_signals[MSUT_SPEED])) ||
 //            (!TO_BOOL(input_signals[MSUT_ACCELLERATION])) ||
 //            (!TO_BOOL(input_signals[MSUT_ET_T])) ||
@@ -181,15 +156,40 @@ void MsutDisplay::slotUpdateTimer()
 //        return;
 
 
-    // для виду. Удалить. zБогос
-    input_signals[MSUT_VU1_I_TED] = 1.3;
-    input_signals[MSUT_VU1_I] = 7;
-    input_signals[MSUT_VU1_U] = 0.8;
-    input_signals[MSUT_VU2_U] = 3.2;
-    input_signals[MSUT_VU2_I] = 200;
+
+    //
+    int z = 2;
+    if (z == 1)
+    {
+        msutMainDispMove_->setMyVisible();
+        msutMainDispParking_->setMyVisible(false);
+        if (!pic_.load(":/msut/msut-main-move")) { return; }
+
+        msutMainDispMove_->updateData(input_signals);
+    }
+    else
+    if (z == 2)
+    {
+        msutMainDispMove_->setMyVisible(false);
+        msutMainDispParking_->setMyVisible();
+        if (!pic_.load(":/msut/msut-main-parking")) { return; }
+
+        msutMainDispParking_->updateData(input_signals);
+    }
+    else
+    {
+        return;
+    }
+
+    background_->setPixmap(pic_);
 
 
-    msutMainDispMove_->updateData(input_signals);
+
+    //
+    labelCurDate_->setText(QDate::currentDate().toString("dd.MM.yyyy"));
+    labelCurTime_->setText(QTime::currentTime().toString());
+
+
 
 
     switch (static_cast<int>(input_signals[MSUT_REVERSOR]))

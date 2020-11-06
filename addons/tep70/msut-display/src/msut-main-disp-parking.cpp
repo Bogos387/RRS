@@ -26,7 +26,7 @@ MsutMainDispParking::MsutMainDispParking(QLabel *parent)
 
     // Температура масла
     scaleArrow_T_oil_ = new ScaleArrow2(QSize(150, 130), 0, parent);
-    scaleArrow_T_oil_->move(487, 57);
+    scaleArrow_T_oil_->move(486, 57);
     scaleArrow_T_oil_->setMaxVal(120);
     scaleArrow_T_oil_->setVal(0);
 
@@ -38,13 +38,13 @@ MsutMainDispParking::MsutMainDispParking(QLabel *parent)
 
     // Давление топлива
     scaleArrow_P_fuel_ = new ScaleArrow2(QSize(150, 130), 0, parent);
-    scaleArrow_P_fuel_->move(318, 220);
+    scaleArrow_P_fuel_->move(317, 220);
     scaleArrow_P_fuel_->setMaxVal(6);
     scaleArrow_P_fuel_->setVal(0);
 
     // Напряжение борт. сети
     scaleArrow_U_chain_ = new ScaleArrow2(QSize(150, 130), 0, parent);
-    scaleArrow_U_chain_->move(487, 220);
+    scaleArrow_U_chain_->move(485, 220);
     scaleArrow_U_chain_->setMaxVal(150);
     scaleArrow_U_chain_->setVal(0);
 
@@ -81,7 +81,19 @@ MsutMainDispParking::MsutMainDispParking(QLabel *parent)
 
 void MsutMainDispParking::updateData(display_signals_t input_signals)
 {
+    scaleArrow_P_oil_->setVal(input_signals[MSUT_ET_T]);
+    scaleArrow_T_whater_->setVal(input_signals[MSUT_ET_T]);
+    scaleArrow_T_oil_->setVal(input_signals[MSUT_ET_T]);
+    scaleArrow_I_AB_->setVal(input_signals[MSUT_ET_T]);
+    scaleArrow_P_fuel_->setVal(input_signals[MSUT_ET_T]);
+    scaleArrow_U_chain_->setVal(input_signals[MSUT_ET_T]);
 
+    label_P_oil_->setText(QString::number(input_signals[MSUT_ET_T]));
+    label_T_whater_->setText(QString::number(input_signals[MSUT_ET_T]));
+    label_T_oil_->setText(QString::number(input_signals[MSUT_ET_T]));
+    label_I_AB_->setText(QString::number(input_signals[MSUT_ET_T]));
+    label_P_fuel_->setText(QString::number(input_signals[MSUT_ET_T]));
+    label_U_chain_->setText(QString::number(input_signals[MSUT_ET_T]));
 }
 
 
