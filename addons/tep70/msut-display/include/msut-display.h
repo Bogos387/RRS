@@ -49,6 +49,14 @@ private:
     QLabel* labelPositin_;
     QLabel* labelRezim_;
 
+    QLabel* label_Positin_Time_;
+
+//    QTimer timerProkachka_;
+//    QTimer timerProkrutka_;
+//    QTimer timerOstanov_;
+    QTimer timerObratniyOtschet_;
+    int timerCount_;
+
 
 
 
@@ -61,6 +69,11 @@ private:
 
 private slots:
     void slotUpdateTimer();
+
+    void slotTimerObratniyOtschet_();
+//    void slotTimerProkachka_();
+//    void slotTimerProkrutka_();
+//    void slotTimerOstanov_();
 
 };
 

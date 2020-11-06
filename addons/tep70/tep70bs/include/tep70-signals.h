@@ -105,6 +105,7 @@ enum
 
 
 
+    MSUT_NOMER_KADR_DISP = 171, // номер кадра дисплея
     MSUT_TIMER_OSTANOV = 172,
     MSUT_TIMER_PROKRUTKA = 173,
     MSUT_TIMER_PROKACHKA = 174,

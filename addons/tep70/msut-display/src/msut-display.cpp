@@ -30,6 +30,16 @@ MsutDisplay::MsutDisplay(QWidget *parent, Qt::WindowFlags f)
     update_timer.setInterval(500);
     update_timer.start();
 
+
+    timerCount_ = 10;
+    connect(&timerObratniyOtschet_, &QTimer::timeout,
+            this, &MsutDisplay::slotTimerObratniyOtschet_);
+    timerObratniyOtschet_.setInterval(1000);
+    //timerObratniyOtschet_.start();
+
+
+
+
 }
 
 //------------------------------------------------------------------------------
@@ -103,6 +113,18 @@ void MsutDisplay::init()
     drawNumberLabel_(labelPositin_, QRect(35,146, 80,48), 35);
     labelPositin_->setText("0");
 
+    // ПОЗИЦИЯ/ВРЕМЯ
+    label_Positin_Time_ = new QLabel(background_);
+    label_Positin_Time_->resize(105, 20);
+    label_Positin_Time_->move(20, 198);
+    //label_Positin_Time_->setStyleSheet("border: 1px solid red; color: red;");
+    label_Positin_Time_->setStyleSheet("color: #000080;");
+    label_Positin_Time_->setAlignment(Qt::AlignHCenter);
+    label_Positin_Time_->setFont(QFont("Arial", 12, 0, true));
+    label_Positin_Time_->setText("ПОЗИЦИЯ");
+
+
+
     // РЕЖИМ
     labelRezim_ = new QLabel(background_);
     drawNumberLabel_(labelRezim_, QRect(15,244, 115,45), 14);
@@ -148,8 +170,10 @@ void MsutDisplay::slotUpdateTimer()
 
 
 
+
+
     //
-    int z = 2;
+    int z = static_cast<int>(input_signals[MSUT_NOMER_KADR_DISP]);
     if (z == 1)
     {
         msutMainDispMove_->setMyVisible();
@@ -203,7 +227,19 @@ void MsutDisplay::slotUpdateTimer()
         labelReversorBwd_->setVisible(false);
     }
 
-    labelPositin_->setText(QString::number(static_cast<int>(input_signals[MSUT_POSITION])));
+
+    if ( (static_cast<int>(input_signals[MSUT_MODE]) == 5) ||
+         (static_cast<int>(input_signals[MSUT_MODE]) == 6) ||
+         (static_cast<int>(input_signals[MSUT_MODE]) == 7) )
+    {
+        label_Positin_Time_->setText("ВРЕМЯ");
+    }
+    else
+    {
+        label_Positin_Time_->setText("ПОЗИЦИЯ");
+        labelPositin_->setText(QString::number(static_cast<int>(input_signals[MSUT_POSITION])));
+    }
+
 
     switch (static_cast<int>(input_signals[MSUT_MODE]))
     {
@@ -224,12 +260,21 @@ void MsutDisplay::slotUpdateTimer()
         break;
     case 5:
         labelRezim_->setText("ПРОКАЧКА");
+        timerCount_ = static_cast<int>(input_signals[MSUT_TIMER_PROKACHKA]);
+        if (!timerObratniyOtschet_.isActive())
+            timerObratniyOtschet_.start();
         break;
     case 6:
         labelRezim_->setText("ПРОКРУТКА");
+        timerCount_ = static_cast<int>(input_signals[MSUT_TIMER_PROKRUTKA]);
+        if (!timerObratniyOtschet_.isActive())
+            timerObratniyOtschet_.start();
         break;
     case 7:
         labelRezim_->setText("ОСТАНОВ");
+        timerCount_ = static_cast<int>(input_signals[MSUT_TIMER_OSTANOV]);
+        if (!timerObratniyOtschet_.isActive())
+            timerObratniyOtschet_.start();
         break;
     case 8:
         labelRezim_->setText("ХОЛ. ХОД");
@@ -240,6 +285,33 @@ void MsutDisplay::slotUpdateTimer()
     }
 
 }
+
+void MsutDisplay::slotTimerObratniyOtschet_()
+{
+    labelPositin_->setText(QString::number(timerCount_));
+
+    if (timerCount_ <= 0)
+        timerObratniyOtschet_.stop();
+
+    --timerCount_;
+}
+
+
+
+//void MsutDisplay::slotTimerProkachka_()
+//{
+
+//}
+
+//void MsutDisplay::slotTimerProkrutka_()
+//{
+
+//}
+
+//void MsutDisplay::slotTimerOstanov_()
+//{
+
+//}
 
 
 
