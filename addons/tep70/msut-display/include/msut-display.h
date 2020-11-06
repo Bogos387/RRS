@@ -10,6 +10,9 @@
 #include    <QLabel>
 #include    <QTimer>
 
+#include "msut-main-disp-move.h"
+#include "msut-main-disp-parking.h"
+
 
 
 //------------------------------------------------------------------------------
@@ -27,32 +30,41 @@ public:
     void init();
 
 private:
+    QLabel* background_;
+    QPixmap pic_;
+
+
     QLabel* labelCurDate_;
     QLabel* labelCurTime_;
 
-    ScaleArrow* scaleArrow_;
-    ScaleArrow* scaleSpeed_;
-    ScaleArrow* scaleAcceleration_;
-    QLabel* labelArrow_;
-    QLabel* labelSpeed_;
-    QLabel* labelAcceleration_;
 
 
-    QFrame* frameVU1_Ited_;
-    QFrame* frameVU1_I_;
-    QFrame* frameVU1_U_;
-    QFrame* frameVU2_U_;
-    QFrame* frameVU2_I_;
-    QLabel* labelVU1_Ited_;
-    QLabel* labelVU1_I_;
-    QLabel* labelVU1_U_;
-    QLabel* labelVU2_U_;
-    QLabel* labelVU2_I_;
+    MsutMainDispMove* msutMainDispMove_;
+    MsutMainDispParking* msutMainDispParking_;
+
+//    ScaleArrow* scaleArrow_;
+//    ScaleArrow* scaleSpeed_;
+//    ScaleArrow* scaleAcceleration_;
+//    QLabel* labelArrow_;
+//    QLabel* labelSpeed_;
+//    QLabel* labelAcceleration_;
+
+
+//    QFrame* frameVU1_Ited_;
+//    QFrame* frameVU1_I_;
+//    QFrame* frameVU1_U_;
+//    QFrame* frameVU2_U_;
+//    QFrame* frameVU2_I_;
+//    QLabel* labelVU1_Ited_;
+//    QLabel* labelVU1_I_;
+//    QLabel* labelVU1_U_;
+//    QLabel* labelVU2_U_;
+//    QLabel* labelVU2_I_;
 
 
 
-    QLabel* label_kW_left_;
-    QLabel* label_kW_right_;
+//    QLabel* label_kW_left_;
+//    QLabel* label_kW_right_;
 
 
     QLabel* labelReversorFwd_;
@@ -61,11 +73,8 @@ private:
     QLabel* labelRezim_;
 
 
-    HorizontBar* hBar_;
+//    HorizontBar* hBar_;
 
-
-
-    void createLab_();
 
     void drawNumberLabel_(QLabel* lab, QRect geo, int fontSize,
                           QString color, Qt::Alignment align = Qt::AlignCenter);
